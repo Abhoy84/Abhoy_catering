@@ -457,4 +457,103 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get enquireNow => 'अभी पूछताछ करें';
+
+  @override
+  String get step2ServiceType => 'चरण 2: सेवा प्रकार';
+
+  @override
+  String get selectServiceType => 'अपनी सेवा का प्रकार चुनें';
+
+  @override
+  String get serviceTypeDesc =>
+      'अपने उत्सव के लिए सबसे उपयुक्त सेवा का प्रकार चुनें';
+
+  @override
+  String get allContract => 'पूर्ण अनुबंध';
+
+  @override
+  String get allContractDesc =>
+      'खाना बनाने, परोसने और सफाई के साथ पूर्ण कैटरिंग समाधान';
+
+  @override
+  String get allContractBengali => '(সম্পূর্ণ চুক্তি / पूर्ण अनुबंध)';
+
+  @override
+  String get cookAndServe => 'खाना बनाना और परोसना';
+
+  @override
+  String get cookAndServeDesc =>
+      'आपके कार्यक्रम के लिए पेशेवर खाना बनाने और परोसने वाला स्टाफ';
+
+  @override
+  String get cookAndServeBengali => '(রান্না ও পরিবেশন / खाना बनाना और परोसना)';
+
+  @override
+  String get onlyCook => 'केवल खाना बनाना';
+
+  @override
+  String get onlyCookDesc =>
+      'आपके स्थल पर स्वादिष्ट भोजन तैयार करने के लिए विशेषज्ञ शेफ';
+
+  @override
+  String get onlyCookBengali => '(শুধুমাত্র রান্না / केवल खाना बनाना)';
+
+  @override
+  String get onlyServe => 'केवल परोसना';
+
+  @override
+  String get onlyServeDesc => 'आपके तैयार भोजन के लिए पेशेवर परोसने वाला स्टाफ';
+
+  @override
+  String get onlyServeBengali => '(শুধুমাত্র পরিবেশন / केवल परोसना)';
+
+  @override
+  String get onlyStarter => 'केवल स्टार्टर';
+
+  @override
+  String get onlyStarterDesc =>
+      'आपके मेहमानों के लिए स्वादिष्ट एपेटाइज़र और स्टार्टर';
+
+  @override
+  String get onlyStarterBengali => '(শুধুমাত্র স্টার্টার / केवल स्टार्टर)';
+
+  @override
+  String get mocktail => 'मॉकटेल सेवा';
+
+  @override
+  String get mocktailDesc => 'आपके उत्सव के लिए ताज़ा मॉकटेल और पेय पदार्थ';
+
+  @override
+  String get mocktailBengali => '(মকটেল / मॉकटेल)';
+
+  @override
+  String get selected => 'चयनित';
+
+  @override
+  String get pleaseSelectService =>
+      'जारी रखने के लिए कृपया एक सेवा प्रकार चुनें';
+
+  @override
+  String get reviewAndConfirm => 'समीक्षा और पुष्टि करें';
+
+  @override
+  String get eventDetails => 'इवेंट विवरण';
+
+  @override
+  String get venue => 'वेन्यू';
+
+  @override
+  String get selectedMenuItems => 'चयनित मेनू आइटम';
+
+  @override
+  String get confirmAndSend => 'पुष्टि करें और भेजें';
+
+  @override
+  String get eventType => 'इवेंट प्रकार';
+
+  @override
+  String get serviceType => 'सेवा प्रकार';
+
+  @override
+  String get guestCount => 'अतिथि संख्या';
 }

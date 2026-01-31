@@ -458,4 +458,104 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get enquireNow => 'Enquire Now';
+
+  @override
+  String get step2ServiceType => 'Step 2: Service Type';
+
+  @override
+  String get selectServiceType => 'Select Your Service Type';
+
+  @override
+  String get serviceTypeDesc =>
+      'Choose the type of service that best fits your celebration';
+
+  @override
+  String get allContract => 'All Contract';
+
+  @override
+  String get allContractDesc =>
+      'Complete catering solution with cooking, serving, and cleanup';
+
+  @override
+  String get allContractBengali => '(সম্পূর্ণ চুক্তি / पूर्ण अनुबंध)';
+
+  @override
+  String get cookAndServe => 'Cook & Serve';
+
+  @override
+  String get cookAndServeDesc =>
+      'Professional cooking and serving staff for your event';
+
+  @override
+  String get cookAndServeBengali => '(রান্না ও পরিবেশন / खाना बनाना और परोसना)';
+
+  @override
+  String get onlyCook => 'Only Cook';
+
+  @override
+  String get onlyCookDesc =>
+      'Expert chefs to prepare delicious meals at your venue';
+
+  @override
+  String get onlyCookBengali => '(শুধুমাত্র রান্না / केवल खाना बनाना)';
+
+  @override
+  String get onlyServe => 'Only Serve';
+
+  @override
+  String get onlyServeDesc =>
+      'Professional serving staff for your prepared food';
+
+  @override
+  String get onlyServeBengali => '(শুধুমাত্র পরিবেশন / केवल परोसना)';
+
+  @override
+  String get onlyStarter => 'Only Starter';
+
+  @override
+  String get onlyStarterDesc =>
+      'Delicious appetizers and starters for your guests';
+
+  @override
+  String get onlyStarterBengali => '(শুধুমাত্র স্টার্টার / केवल स्टार्टर)';
+
+  @override
+  String get mocktail => 'Mocktail Service';
+
+  @override
+  String get mocktailDesc =>
+      'Refreshing mocktails and beverages for your celebration';
+
+  @override
+  String get mocktailBengali => '(মকটেল / मॉकटेल)';
+
+  @override
+  String get selected => 'Selected';
+
+  @override
+  String get pleaseSelectService => 'Please select a service type to continue';
+
+  @override
+  String get reviewAndConfirm => 'Review & Confirm';
+
+  @override
+  String get eventDetails => 'Event Details';
+
+  @override
+  String get venue => 'Venue';
+
+  @override
+  String get selectedMenuItems => 'Selected Menu Items';
+
+  @override
+  String get confirmAndSend => 'Confirm & Send';
+
+  @override
+  String get eventType => 'Event Type';
+
+  @override
+  String get serviceType => 'Service Type';
+
+  @override
+  String get guestCount => 'Guest Count';
 }

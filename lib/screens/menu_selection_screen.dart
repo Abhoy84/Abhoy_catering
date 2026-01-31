@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:abhoy_catering/l10n/app_localizations.dart';
-import '../providers/locale_provider.dart';
 import '../utils/app_colors.dart';
 import 'logistics_screen.dart';
 
 class MenuSelectionScreen extends StatefulWidget {
   final String eventType;
+  final String serviceType;
 
-  const MenuSelectionScreen({super.key, required this.eventType});
+  const MenuSelectionScreen({
+    super.key,
+    required this.eventType,
+    required this.serviceType,
+  });
 
   @override
   State<MenuSelectionScreen> createState() => _MenuSelectionScreenState();
@@ -408,15 +411,11 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
           ),
           const SizedBox(width: 24),
           // Language, Cart, User icons
-          Consumer<LocaleProvider>(
-            builder: (context, provider, child) {
-              return IconButton(
-                icon: const Icon(Icons.language, size: 24),
-                color: AppColors.textBlack,
-                onPressed: () {
-                  // Show language selector
-                },
-              );
+          IconButton(
+            icon: const Icon(Icons.language, size: 24),
+            color: AppColors.textBlack,
+            onPressed: () {
+              // Show language selector
             },
           ),
           IconButton(
@@ -932,6 +931,7 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
                           MaterialPageRoute(
                             builder: (context) => LogisticsScreen(
                               eventType: widget.eventType,
+                              serviceType: widget.serviceType,
                               selectedMenuItems: selectedItems,
                             ),
                           ),

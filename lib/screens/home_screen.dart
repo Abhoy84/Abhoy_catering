@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:abhoy_catering/l10n/app_localizations.dart';
-import '../providers/locale_provider.dart';
+import '../controllers/locale_controller.dart';
 import '../utils/app_colors.dart';
 import 'contact_screen.dart';
 import 'booking_screen.dart';
@@ -88,50 +88,44 @@ class HomeScreen extends StatelessWidget {
             ),
           Row(
             children: [
-              Consumer<LocaleProvider>(
-                builder: (context, provider, child) {
-                  return DropdownButtonHideUnderline(
-                    child: DropdownButton<Locale>(
-                      value: provider.locale ?? const Locale('en'),
-                      icon: const Icon(Icons.language, size: 20),
-                      style: const TextStyle(
-                        color: AppColors.textBlack,
-                        fontSize: 14,
-                      ),
-                      onChanged: (Locale? newValue) {
-                        if (newValue != null) {
-                          provider.setLocale(newValue);
-                        }
-                      },
-                      items: L10n.all.map<DropdownMenuItem<Locale>>((
-                        Locale locale,
-                      ) {
-                        return DropdownMenuItem<Locale>(
-                          value: locale,
-                          child: Row(
-                            children: [
-                              Text(L10n.getFlag(locale.languageCode)),
-                              const SizedBox(width: 4),
-                              Text(
-                                L10n.getName(locale.languageCode).toUpperCase(),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
+              Obx(() {
+                final localeController = Get.find<LocaleController>();
+                return DropdownButtonHideUnderline(
+                  child: DropdownButton<Locale>(
+                    value: localeController.locale,
+                    icon: const Icon(Icons.language, size: 20),
+                    style: const TextStyle(
+                      color: AppColors.textBlack,
+                      fontSize: 14,
                     ),
-                  );
-                },
-              ),
+                    onChanged: (Locale? newValue) {
+                      if (newValue != null) {
+                        localeController.setLocale(newValue);
+                      }
+                    },
+                    items: LocaleController.supportedLocales
+                        .map<DropdownMenuItem<Locale>>((Locale locale) {
+                          return DropdownMenuItem<Locale>(
+                            value: locale,
+                            child: Row(
+                              children: [
+                                Text(_getFlag(locale.languageCode)),
+                                const SizedBox(width: 4),
+                                Text(
+                                  _getName(locale.languageCode).toUpperCase(),
+                                ),
+                              ],
+                            ),
+                          );
+                        })
+                        .toList(),
+                  ),
+                );
+              }),
               const SizedBox(width: 16),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const BookingScreen(),
-                    ),
-                  );
+                  Get.to(() => const BookingScreen());
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primaryOrange,
@@ -1065,5 +1059,32 @@ class HomeScreen extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  // Helper methods for locale display
+  String _getFlag(String languageCode) {
+    switch (languageCode) {
+      case 'en':
+        return '🇬🇧';
+      case 'bn':
+        return '🇧🇩';
+      case 'hi':
+        return '🇮🇳';
+      default:
+        return '🌐';
+    }
+  }
+
+  String _getName(String languageCode) {
+    switch (languageCode) {
+      case 'en':
+        return 'English';
+      case 'bn':
+        return 'বাংলা';
+      case 'hi':
+        return 'हिंदी';
+      default:
+        return languageCode;
+    }
   }
 }

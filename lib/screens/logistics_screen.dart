@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:abhoy_catering/l10n/app_localizations.dart';
-import '../providers/locale_provider.dart';
+import '../controllers/locale_controller.dart';
 import '../utils/app_colors.dart';
 import 'review_screen.dart';
 
 class LogisticsScreen extends StatefulWidget {
   final String eventType;
+  final String serviceType;
   final Map<String, int> selectedMenuItems;
 
   const LogisticsScreen({
     super.key,
     required this.eventType,
+    required this.serviceType,
     required this.selectedMenuItems,
   });
 
@@ -152,30 +154,29 @@ class _LogisticsScreenState extends State<LogisticsScreen> {
                 child: const Text('Sign In'),
               ),
               const SizedBox(width: 16),
-              Consumer<LocaleProvider>(
-                builder: (context, provider, child) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.language, size: 20),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Language: ${L10n.getName(provider.locale?.languageCode ?? 'en').toUpperCase()}',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+              Obx(() {
+                final localeController = Get.find<LocaleController>();
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey.shade300),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.language, size: 20),
+                      const SizedBox(width: 4),
+                      Text(
+                        'Language: ${LocaleController.getName(localeController.locale.languageCode).toUpperCase()}',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                    ],
+                  ),
+                );
+              }),
             ],
           ),
         ],
@@ -564,6 +565,7 @@ class _LogisticsScreenState extends State<LogisticsScreen> {
                     MaterialPageRoute(
                       builder: (context) => ReviewScreen(
                         eventType: widget.eventType,
+                        serviceType: widget.serviceType,
                         selectedMenuItems: widget.selectedMenuItems,
                         guestCount: guestCount,
                         eventDate: selectedDate,

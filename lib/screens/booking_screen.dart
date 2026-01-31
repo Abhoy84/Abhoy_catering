@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:abhoy_catering/l10n/app_localizations.dart';
-import '../providers/locale_provider.dart';
+import '../controllers/locale_controller.dart';
 import '../utils/app_colors.dart';
-import 'menu_selection_screen.dart';
+import 'service_type_screen.dart';
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({super.key});
@@ -81,56 +81,56 @@ class _BookingScreenState extends State<BookingScreen> {
             ],
           ),
           // Language Selector
-          Consumer<LocaleProvider>(
-            builder: (context, provider, child) {
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
+          Obx(() {
+            final localeController = Get.find<LocaleController>();
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColors.primaryOrange.withOpacity(0.3),
                 ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColors.primaryOrange.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<Locale>(
+                  value: localeController.locale,
+                  icon: const Icon(
+                    Icons.language,
+                    size: 16,
+                    color: AppColors.primaryOrange,
                   ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<Locale>(
-                    value: provider.locale ?? const Locale('en'),
-                    icon: const Icon(
-                      Icons.language,
-                      size: 16,
-                      color: AppColors.primaryOrange,
-                    ),
-                    style: const TextStyle(
-                      color: AppColors.primaryOrange,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    onChanged: (Locale? newValue) {
-                      if (newValue != null) {
-                        provider.setLocale(newValue);
-                      }
-                    },
-                    items: L10n.all.map<DropdownMenuItem<Locale>>((
-                      Locale locale,
-                    ) {
-                      return DropdownMenuItem<Locale>(
-                        value: locale,
-                        child: Row(
-                          children: [
-                            Text(L10n.getFlag(locale.languageCode)),
-                            const SizedBox(width: 4),
-                            Text(L10n.getName(locale.languageCode)),
-                          ],
-                        ),
-                      );
-                    }).toList(),
+                  style: const TextStyle(
+                    color: AppColors.primaryOrange,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
+                  onChanged: (Locale? newValue) {
+                    if (newValue != null) {
+                      localeController.setLocale(newValue);
+                    }
+                  },
+                  items: LocaleController.supportedLocales
+                      .map<DropdownMenuItem<Locale>>((Locale locale) {
+                        return DropdownMenuItem<Locale>(
+                          value: locale,
+                          child: Row(
+                            children: [
+                              Text(
+                                LocaleController.getFlag(locale.languageCode),
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                LocaleController.getName(locale.languageCode),
+                              ),
+                            ],
+                          ),
+                        );
+                      })
+                      .toList(),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -326,7 +326,7 @@ class _BookingScreenState extends State<BookingScreen> {
             child: ElevatedButton(
               onPressed: selectedEventType != null
                   ? () {
-                      // Navigate to menu selection screen
+                      // Navigate to service type selection screen
                       final eventType = selectedEventType == 'custom'
                           ? customEventController.text
                           : selectedEventType!;
@@ -335,7 +335,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              MenuSelectionScreen(eventType: eventType),
+                              ServiceTypeScreen(eventType: eventType),
                         ),
                       );
                     }

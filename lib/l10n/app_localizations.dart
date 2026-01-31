@@ -957,6 +957,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enquire Now'**
   String get enquireNow;
+
+  /// No description provided for @step2ServiceType.
+  ///
+  /// In en, this message translates to:
+  /// **'Step 2: Service Type'**
+  String get step2ServiceType;
+
+  /// No description provided for @selectServiceType.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Your Service Type'**
+  String get selectServiceType;
+
+  /// No description provided for @serviceTypeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the type of service that best fits your celebration'**
+  String get serviceTypeDesc;
+
+  /// No description provided for @allContract.
+  ///
+  /// In en, this message translates to:
+  /// **'All Contract'**
+  String get allContract;
+
+  /// No description provided for @allContractDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete catering solution with cooking, serving, and cleanup'**
+  String get allContractDesc;
+
+  /// No description provided for @allContractBengali.
+  ///
+  /// In en, this message translates to:
+  /// **'(সম্পূর্ণ চুক্তি / पूर्ण अनुबंध)'**
+  String get allContractBengali;
+
+  /// No description provided for @cookAndServe.
+  ///
+  /// In en, this message translates to:
+  /// **'Cook & Serve'**
+  String get cookAndServe;
+
+  /// No description provided for @cookAndServeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional cooking and serving staff for your event'**
+  String get cookAndServeDesc;
+
+  /// No description provided for @cookAndServeBengali.
+  ///
+  /// In en, this message translates to:
+  /// **'(রান্না ও পরিবেশন / खाना बनाना और परोसना)'**
+  String get cookAndServeBengali;
+
+  /// No description provided for @onlyCook.
+  ///
+  /// In en, this message translates to:
+  /// **'Only Cook'**
+  String get onlyCook;
+
+  /// No description provided for @onlyCookDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Expert chefs to prepare delicious meals at your venue'**
+  String get onlyCookDesc;
+
+  /// No description provided for @onlyCookBengali.
+  ///
+  /// In en, this message translates to:
+  /// **'(শুধুমাত্র রান্না / केवल खाना बनाना)'**
+  String get onlyCookBengali;
+
+  /// No description provided for @onlyServe.
+  ///
+  /// In en, this message translates to:
+  /// **'Only Serve'**
+  String get onlyServe;
+
+  /// No description provided for @onlyServeDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Professional serving staff for your prepared food'**
+  String get onlyServeDesc;
+
+  /// No description provided for @onlyServeBengali.
+  ///
+  /// In en, this message translates to:
+  /// **'(শুধুমাত্র পরিবেশন / केवल परोसना)'**
+  String get onlyServeBengali;
+
+  /// No description provided for @onlyStarter.
+  ///
+  /// In en, this message translates to:
+  /// **'Only Starter'**
+  String get onlyStarter;
+
+  /// No description provided for @onlyStarterDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Delicious appetizers and starters for your guests'**
+  String get onlyStarterDesc;
+
+  /// No description provided for @onlyStarterBengali.
+  ///
+  /// In en, this message translates to:
+  /// **'(শুধুমাত্র স্টার্টার / केवल स्टार्टर)'**
+  String get onlyStarterBengali;
+
+  /// No description provided for @mocktail.
+  ///
+  /// In en, this message translates to:
+  /// **'Mocktail Service'**
+  String get mocktail;
+
+  /// No description provided for @mocktailDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing mocktails and beverages for your celebration'**
+  String get mocktailDesc;
+
+  /// No description provided for @mocktailBengali.
+  ///
+  /// In en, this message translates to:
+  /// **'(মকটেল / मॉकटेल)'**
+  String get mocktailBengali;
+
+  /// No description provided for @selected.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected'**
+  String get selected;
+
+  /// No description provided for @pleaseSelectService.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a service type to continue'**
+  String get pleaseSelectService;
+
+  /// No description provided for @reviewAndConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Review & Confirm'**
+  String get reviewAndConfirm;
+
+  /// No description provided for @eventDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Details'**
+  String get eventDetails;
+
+  /// No description provided for @venue.
+  ///
+  /// In en, this message translates to:
+  /// **'Venue'**
+  String get venue;
+
+  /// No description provided for @selectedMenuItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected Menu Items'**
+  String get selectedMenuItems;
+
+  /// No description provided for @confirmAndSend.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm & Send'**
+  String get confirmAndSend;
+
+  /// No description provided for @eventType.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Type'**
+  String get eventType;
+
+  /// No description provided for @serviceType.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Type'**
+  String get serviceType;
+
+  /// No description provided for @guestCount.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest Count'**
+  String get guestCount;
 }
 
 class _AppLocalizationsDelegate

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:abhoy_catering/l10n/app_localizations.dart';
-import '../providers/locale_provider.dart';
+import '../controllers/locale_controller.dart';
 import '../utils/app_colors.dart';
 
 class ConfirmationScreen extends StatefulWidget {
@@ -33,6 +33,7 @@ class _ConfirmationScreenState extends State<ConfirmationScreen>
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
+  final localeController = Get.find<LocaleController>();
 
   @override
   void initState() {
@@ -124,37 +125,31 @@ class _ConfirmationScreenState extends State<ConfirmationScreen>
               const SizedBox(width: 32),
               _buildNavLink(l10n?.about ?? 'About Us'),
               const SizedBox(width: 32),
-              Consumer<LocaleProvider>(
-                builder: (context, provider, child) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryOrange,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.language,
-                          size: 20,
+              Obx(
+                () => Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryOrange,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.language, size: 20, color: Colors.white),
+                      const SizedBox(width: 4),
+                      Text(
+                        localeController.locale.languageCode.toUpperCase(),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
-                        const SizedBox(width: 4),
-                        Text(
-                          provider.locale?.languageCode.toUpperCase() ?? 'EN',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      ),
+                    ],
+                  ),
+                ),
               ),
               const SizedBox(width: 16),
               IconButton(
