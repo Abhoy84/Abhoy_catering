@@ -1,12 +1,19 @@
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '../models/booking.dart';
+import '../models/menu_item.dart';
 
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance;
 
   // Collection reference
   CollectionReference get bookingsCollection =>
       _firestore.collection('bookings');
+
+  CollectionReference get menuItemsCollection =>
+      _firestore.collection('menu_items');
 
   // Create a new booking
   Future<String> createBooking(Booking booking) async {
@@ -167,5 +174,69 @@ class FirebaseService {
     } catch (e) {
       throw Exception('Failed to search bookings: $e');
     }
+  }
+
+  // MARK: - Storage
+  Future<String> uploadImage(File file, String path) async {
+    try {
+      Reference ref = _storage.ref().child(path);
+      UploadTask uploadTask = ref.putFile(file);
+      TaskSnapshot snapshot = await uploadTask;
+      return await snapshot.ref.getDownloadURL();
+    } catch (e) {
+      throw Exception('Failed to upload image: $e');
+    }
+  }
+
+  // MARK: - Menu Items
+
+  // Create a new menu item
+  Future<String> addMenuItem(MenuItem item) async {
+    try {
+      DocumentReference docRef = await menuItemsCollection.add(item.toMap());
+      return docRef.id;
+    } catch (e) {
+      throw Exception('Failed to add menu item: $e');
+    }
+  }
+
+  // Update a menu item
+  Future<void> updateMenuItem(MenuItem item) async {
+    try {
+      await menuItemsCollection.doc(item.id).update(item.toMap());
+    } catch (e) {
+      throw Exception('Failed to update menu item: $e');
+    }
+  }
+
+  // Delete a menu item
+  Future<void> deleteMenuItem(String id) async {
+    try {
+      await menuItemsCollection.doc(id).delete();
+    } catch (e) {
+      throw Exception('Failed to delete menu item: $e');
+    }
+  }
+
+  // Get all menu items
+  Stream<List<MenuItem>> getMenuItems() {
+    return menuItemsCollection.orderBy('nameEn').snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        return MenuItem.fromMap(doc.id, doc.data() as Map<String, dynamic>);
+      }).toList();
+    });
+  }
+
+  // Get menu items by category
+  Stream<List<MenuItem>> getMenuItemsByCategory(String category) {
+    return menuItemsCollection
+        .where('category', isEqualTo: category)
+        .orderBy('nameEn')
+        .snapshots()
+        .map((snapshot) {
+          return snapshot.docs.map((doc) {
+            return MenuItem.fromMap(doc.id, doc.data() as Map<String, dynamic>);
+          }).toList();
+        });
   }
 }

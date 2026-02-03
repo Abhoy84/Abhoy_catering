@@ -5,6 +5,7 @@ import '../controllers/locale_controller.dart';
 import '../utils/app_colors.dart';
 import 'contact_screen.dart';
 import 'booking_screen.dart';
+import 'admin/admin_login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -122,6 +123,20 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
               }),
+              const SizedBox(width: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Get.to(() => const AdminLoginScreen());
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey[800],
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                child: const Text('Admin'),
+              ),
               const SizedBox(width: 16),
               ElevatedButton(
                 onPressed: () {

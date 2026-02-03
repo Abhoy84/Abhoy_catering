@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide MenuController;
+import 'package:get/get.dart';
 import 'package:abhoy_catering/l10n/app_localizations.dart';
 import '../utils/app_colors.dart';
+import '../controllers/menu_controller.dart';
+import '../models/menu_item.dart';
 import 'logistics_screen.dart';
 
 class MenuSelectionScreen extends StatefulWidget {
@@ -18,6 +21,8 @@ class MenuSelectionScreen extends StatefulWidget {
 }
 
 class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
+  final MenuController _menuController = Get.put(MenuController());
+
   int currentCategoryIndex = 0; // Track current category
   final List<String> categories = [
     'Starters',
@@ -31,267 +36,24 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
   String get selectedCategory => categories[currentCategoryIndex];
   bool get isLastCategory => currentCategoryIndex == categories.length - 1;
 
-  // Sample menu data - Authentic Digha & Bengali Cuisine
-  final Map<String, List<MenuItem>> menuItems = {
-    'Starters': [
-      MenuItem(
-        name: 'Fish Kabiraji',
-        description:
-            'Crispy breaded fish fillet with a traditional lacey egg...',
-        price: 120,
-        image:
-            'https://images.unsplash.com/photo-1580959375944-57609b97d1e6?w=400',
-        isVeg: false,
-      ),
-      MenuItem(
-        name: 'Paneer Tikka',
-        description: 'Marinated cottage cheese cubes grilled to perfection...',
-        price: 100,
-        image:
-            'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Mochar Chop',
-        description: 'Deep-fried croquettes made from finely chopped banan...',
-        price: 80,
-        image:
-            'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Vegetable Cutlet',
-        description: 'Mixed seasonal vegetables mashed with roasted...',
-        price: 60,
-        image:
-            'https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Chicken 65',
-        description: 'A spicy, deep-fried chicken dish originating from...',
-        price: 140,
-        image:
-            'https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=400',
-        isVeg: false,
-      ),
-      MenuItem(
-        name: 'Crispy Chilli Babycorn',
-        description:
-            'Tender babycorn fried to a crisp and tossed in a sweet...',
-        price: 90,
-        image:
-            'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400',
-        isVeg: true,
-      ),
-    ],
-    'Main Course': [
-      MenuItem(
-        name: 'Chingri Malai Curry',
-        description: 'Digha prawns cooked in rich coconut milk gravy...',
-        price: 280,
-        image:
-            'https://images.unsplash.com/photo-1633945274309-2c8c2b0d8b5f?w=400',
-        isVeg: false,
-      ),
-      MenuItem(
-        name: 'Pomfret Fry',
-        description: 'Fresh Digha pomfret marinated with Bengali spices...',
-        price: 250,
-        image:
-            'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400',
-        isVeg: false,
-      ),
-      MenuItem(
-        name: 'Bhetki Paturi',
-        description: 'Bhetki fish wrapped in banana leaf with mustard paste...',
-        price: 220,
-        image:
-            'https://images.unsplash.com/photo-1534604973900-c43ab4c2e0ab?w=400',
-        isVeg: false,
-      ),
-      MenuItem(
-        name: 'Mutton Kosha',
-        description: 'Slow-cooked Bengali mutton curry with aromatic spices...',
-        price: 260,
-        image:
-            'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400',
-        isVeg: false,
-      ),
-      MenuItem(
-        name: 'Shukto',
-        description: 'Traditional Bengali mixed vegetable curry with bitter...',
-        price: 120,
-        image:
-            'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Aloo Posto',
-        description: 'Potatoes cooked in poppy seed paste - Bengali classic...',
-        price: 100,
-        image:
-            'https://images.unsplash.com/photo-1589621316382-008455b857cd?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Chicken Rezala',
-        description: 'Mughlai-style chicken in white gravy with cashews...',
-        price: 200,
-        image:
-            'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400',
-        isVeg: false,
-      ),
-      MenuItem(
-        name: 'Dhokar Dalna',
-        description: 'Fried lentil cakes in tomato-based curry...',
-        price: 110,
-        image:
-            'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Ilish Bhapa',
-        description: 'Steamed Hilsa fish with mustard - Bengali delicacy...',
-        price: 300,
-        image:
-            'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400',
-        isVeg: false,
-      ),
-    ],
-    'Desserts': [
-      MenuItem(
-        name: 'Rosogolla',
-        description: 'Soft spongy cottage cheese balls in sugar syrup...',
-        price: 60,
-        image:
-            'https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Mishti Doi',
-        description: 'Sweet yogurt - traditional Bengali dessert...',
-        price: 50,
-        image:
-            'https://images.unsplash.com/photo-1571212515416-fca2b29c4668?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Sandesh',
-        description: 'Delicate cottage cheese sweet with cardamom...',
-        price: 70,
-        image:
-            'https://images.unsplash.com/photo-1606312619070-d48b4cbc5b52?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Rasmalai',
-        description: 'Cottage cheese dumplings in sweetened milk...',
-        price: 80,
-        image:
-            'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Gulab Jamun',
-        description: 'Deep-fried milk balls soaked in rose-flavored syrup...',
-        price: 60,
-        image:
-            'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Patishapta',
-        description: 'Rice flour crepes filled with coconut and jaggery...',
-        price: 70,
-        image:
-            'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Nolen Gurer Payesh',
-        description: 'Rice pudding with date palm jaggery...',
-        price: 90,
-        image:
-            'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Langcha',
-        description: 'Cylindrical sweet made from khoya, fried and soaked...',
-        price: 65,
-        image:
-            'https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=400',
-        isVeg: true,
-      ),
-    ],
-    'Drinks': [
-      MenuItem(
-        name: 'Aam Pora Shorbot',
-        description: 'Roasted raw mango drink - summer special...',
-        price: 40,
-        image:
-            'https://images.unsplash.com/photo-1546173159-315724a31696?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Gondhoraj Lebu Shorbot',
-        description: 'Aromatic Gondhoraj lime juice - Bengali specialty...',
-        price: 45,
-        image:
-            'https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9d?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Daab Shorbot',
-        description: 'Fresh tender coconut water from Digha...',
-        price: 50,
-        image:
-            'https://images.unsplash.com/photo-1585238341710-4a8fa2c4d1ae?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Masala Chaas',
-        description: 'Spiced buttermilk with roasted cumin...',
-        price: 35,
-        image:
-            'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Jal Jeera',
-        description: 'Cumin-flavored refreshing drink...',
-        price: 35,
-        image:
-            'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Fresh Lime Soda',
-        description: 'Sweet or salty lime soda with fresh mint...',
-        price: 40,
-        image:
-            'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Lassi',
-        description: 'Traditional yogurt-based drink - sweet or salted...',
-        price: 50,
-        image:
-            'https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?w=400',
-        isVeg: true,
-      ),
-      MenuItem(
-        name: 'Bel Pana',
-        description: 'Wood apple juice with jaggery and spices...',
-        price: 45,
-        image:
-            'https://images.unsplash.com/photo-1534353436294-0dbd4bdac845?w=400',
-        isVeg: true,
-      ),
-    ],
-  };
+  // Helper method to get filtered items for current category
+  List<MenuItem> _getFilteredItems() {
+    return _menuController.menuItems.where((item) {
+      // Map database types to UI categories if needed, or ensure they match
+      // DB: 'Starter', 'Main Course', 'Dessert', 'Drinks' (Assuming standard)
+      // UI: 'Starters', 'Main Course', 'Desserts', 'Drinks'
+
+      String type = item.type;
+      // Normalize comparison
+      String categoryTab = selectedCategory;
+
+      if (categoryTab == 'Starters')
+        return type == 'Starter' || type == 'Starters';
+      if (categoryTab == 'Desserts')
+        return type == 'Dessert' || type == 'Desserts';
+      return type == categoryTab;
+    }).toList();
+  }
 
   @override
   void dispose() {
@@ -306,17 +68,12 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
   double getSubtotal() {
     double total = 0;
     selectedItems.forEach((itemName, quantity) {
-      final item = menuItems[selectedCategory]?.firstWhere(
-        (item) => item.name == itemName,
-        orElse: () => MenuItem(
-          name: '',
-          description: '',
-          price: 0,
-          image: '',
-          isVeg: true,
-        ),
+      // Find item in all menu items
+      final item = _menuController.menuItems.firstWhereOrNull(
+        (item) => item.nameEn == itemName,
       );
-      if (item != null && item.name.isNotEmpty) {
+
+      if (item != null) {
         total += item.price * quantity;
       }
     });
@@ -583,22 +340,37 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
   }
 
   Widget _buildMenuGrid() {
-    final items = menuItems[selectedCategory] ?? [];
+    return Obx(() {
+      if (_menuController.isLoading.value) {
+        return const Center(child: CircularProgressIndicator());
+      }
 
-    return GridView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 24,
-        mainAxisSpacing: 24,
-        childAspectRatio: 0.85,
-      ),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return _buildMenuItem(items[index]);
-      },
-    );
+      final items = _getFilteredItems();
+
+      if (items.isEmpty) {
+        return const Center(
+          child: Padding(
+            padding: EdgeInsets.all(40),
+            child: Text('No items found in this category'),
+          ),
+        );
+      }
+
+      return GridView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          crossAxisSpacing: 24,
+          mainAxisSpacing: 24,
+          childAspectRatio: 1.1,
+        ),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return _buildMenuItem(items[index]);
+        },
+      );
+    });
   }
 
   Widget _buildMenuItem(MenuItem item) {
@@ -625,11 +397,41 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
               borderRadius: const BorderRadius.vertical(
                 top: Radius.circular(12),
               ),
-              image: DecorationImage(
-                image: NetworkImage(item.image),
-                fit: BoxFit.cover,
-              ),
             ),
+            child: item.imageUrl.isNotEmpty
+                ? ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(12),
+                    ),
+                    child: Image.network(
+                      item.imageUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      errorBuilder: (context, error, stackTrace) {
+                        return const Center(
+                          child: Icon(
+                            Icons.broken_image_outlined,
+                            size: 40,
+                            color: Colors.grey,
+                          ),
+                        );
+                      },
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Center(
+                          child: CircularProgressIndicator(
+                            value: loadingProgress.expectedTotalBytes != null
+                                ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                : null,
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                : const Center(
+                    child: Icon(Icons.fastfood, size: 40, color: Colors.grey),
+                  ),
           ),
           Padding(
             padding: const EdgeInsets.all(16),
@@ -641,7 +443,7 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
                   children: [
                     Expanded(
                       child: Text(
-                        item.name,
+                        item.nameEn,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -649,43 +451,72 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
                         ),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: item.isVeg
-                            ? Colors.green.withOpacity(0.1)
-                            : Colors.red.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        item.isVeg ? 'Veg' : 'Non-Veg',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: item.isVeg
-                              ? Colors.green[700]
-                              : Colors.red[700],
+                    Row(
+                      children: [
+                        if (item.quantity.isNotEmpty) ...[
+                          Text(
+                            '${item.quantity} ${_formatUnit(item.unit)}',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textBlack,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 8,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            color: item.category == 'VEG'
+                                ? Colors.green.withOpacity(0.1)
+                                : Colors.red.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            item.category == 'VEG' ? 'Veg' : 'Non-Veg',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.bold,
+                              color: item.category == 'VEG'
+                                  ? Colors.green[700]
+                                  : Colors.red[700],
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  item.description,
+                  // Showing English, Bengali and Hindi names
+                  '${item.nameBn}. ${item.nameHi}',
                   style: TextStyle(fontSize: 12, color: AppColors.textGrey),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
+                if (item.description.isNotEmpty) ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    item.description,
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: AppColors.textGrey.withOpacity(0.8),
+                      fontStyle: FontStyle.italic,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
                 const SizedBox(height: 12),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '₹${item.price}/plate',
+                      '₹${item.price.toInt()}${item.unit == 'Plate' || item.unit.isEmpty ? '/plate' : ''}',
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -708,8 +539,8 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
                         padding: EdgeInsets.zero,
                         onPressed: () {
                           setState(() {
-                            selectedItems[item.name] =
-                                (selectedItems[item.name] ?? 0) + 1;
+                            selectedItems[item.nameEn] =
+                                (selectedItems[item.nameEn] ?? 0) + 1;
                           });
                         },
                       ),
@@ -800,19 +631,12 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
                     itemBuilder: (context, index) {
                       final itemName = selectedItems.keys.elementAt(index);
                       final quantity = selectedItems[itemName]!;
-                      final item = menuItems[selectedCategory]?.firstWhere(
-                        (item) => item.name == itemName,
-                        orElse: () => MenuItem(
-                          name: '',
-                          description: '',
-                          price: 0,
-                          image: '',
-                          isVeg: true,
-                        ),
+
+                      final item = _menuController.menuItems.firstWhereOrNull(
+                        (item) => item.nameEn == itemName,
                       );
 
-                      if (item == null || item.name.isEmpty)
-                        return const SizedBox();
+                      if (item == null) return const SizedBox();
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -835,7 +659,7 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    item.name,
+                                    item.nameEn,
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
@@ -1037,20 +861,19 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
       ),
     );
   }
-}
 
-class MenuItem {
-  final String name;
-  final String description;
-  final double price;
-  final String image;
-  final bool isVeg;
-
-  MenuItem({
-    required this.name,
-    required this.description,
-    required this.price,
-    required this.image,
-    required this.isVeg,
-  });
+  String _formatUnit(String unit) {
+    switch (unit) {
+      case 'Weight (g)':
+        return 'g';
+      case 'Weight (kg)':
+        return 'kg';
+      case 'Pieces':
+        return 'pcs';
+      case 'Volume (ml)':
+        return 'ml';
+      default:
+        return unit;
+    }
+  }
 }

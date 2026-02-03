@@ -14,6 +14,36 @@ class BookingController extends GetxController {
   final RxString errorMessage = ''.obs;
   final Rx<Booking?> currentBooking = Rx<Booking?>(null);
 
+  // Admin: All bookings list
+  final RxList<Booking> allBookings = <Booking>[].obs;
+  final RxList<Booking> filteredBookings = <Booking>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    // Only bind if user is admin?
+    // Ideally we should check role, but for now we bind it.
+    // Or we can lazy load it.
+    // Let's lazy load it in a separate method or init.
+  }
+
+  void initAdmin() {
+    allBookings.bindStream(_firebaseService.getAllBookings());
+    ever(allBookings, (_) {
+      filteredBookings.value = allBookings;
+    });
+  }
+
+  void filterBookings(String status) {
+    if (status == 'All Bookings') {
+      filteredBookings.value = allBookings;
+    } else {
+      filteredBookings.value = allBookings
+          .where((b) => b.status.toLowerCase() == status.toLowerCase())
+          .toList();
+    }
+  }
+
   // Submit booking
   Future<bool> submitBooking({
     required String eventType,
@@ -100,8 +130,16 @@ class BookingController extends GetxController {
     return Stream.value([]);
   }
 
-  // Clear current booking
   void clearCurrentBooking() {
     currentBooking.value = null;
+  }
+
+  Future<void> updateBookingStatus(String id, String status) async {
+    try {
+      await _firebaseService.updateBookingStatus(id, status);
+      Get.snackbar('Success', 'Booking status updated to $status');
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to update booking status: $e');
+    }
   }
 }
