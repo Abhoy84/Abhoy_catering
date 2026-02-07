@@ -4,6 +4,7 @@ import 'package:abhoy_catering/l10n/app_localizations.dart';
 import '../controllers/locale_controller.dart';
 import '../utils/app_colors.dart';
 import 'menu_selection_screen.dart';
+import 'logistics_screen.dart';
 
 class ServiceTypeScreen extends StatefulWidget {
   final String eventType;
@@ -384,15 +385,29 @@ class _ServiceTypeScreenState extends State<ServiceTypeScreen>
               child: ElevatedButton(
                 onPressed: selectedServiceType != null
                     ? () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MenuSelectionScreen(
-                              eventType: widget.eventType,
-                              serviceType: selectedServiceType!,
+                        if (selectedServiceType == 'only_serve') {
+                          // Skip Menu Selection for Only Serve
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LogisticsScreen(
+                                eventType: widget.eventType,
+                                serviceType: selectedServiceType!,
+                                selectedMenuItems: const {},
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MenuSelectionScreen(
+                                eventType: widget.eventType,
+                                serviceType: selectedServiceType!,
+                              ),
+                            ),
+                          );
+                        }
                       }
                     : null,
                 style: ElevatedButton.styleFrom(
